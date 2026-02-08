@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "lib": ["ES2022"],
+    "outDir": "dist",
+    "rootDir": "src",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "paths": {
+      "@modelcontextprotocol/sdk/server/stdio": ["./node_modules/@modelcontextprotocol/sdk/dist/esm/server/stdio.d.ts"],
+      "@modelcontextprotocol/sdk/types": ["./node_modules/@modelcontextprotocol/sdk/dist/esm/types.d.ts"],
+      "@modelcontextprotocol/sdk/server": ["./node_modules/@modelcontextprotocol/sdk/dist/esm/server/index.d.ts"],
+      "@modelcontextprotocol/sdk/client": ["./node_modules/@modelcontextprotocol/sdk/dist/esm/client/index.d.ts"],
+      "@modelcontextprotocol/sdk/inMemory": ["./node_modules/@modelcontextprotocol/sdk/dist/esm/inMemory.d.ts"]
+    }
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "dist", "src/__tests__"]
+}
