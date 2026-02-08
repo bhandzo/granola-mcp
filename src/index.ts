@@ -65,7 +65,8 @@ const TOOL_DEFINITIONS = [
 	},
 	{
 		name: "get-note",
-		description: "Get the full content of a specific Granola note by ID.",
+		description:
+			"Get the full content of a specific Granola note by ID. When path is provided, writes to file with YAML frontmatter and returns a short confirmation instead of the full content.",
 		inputSchema: {
 			type: "object" as const,
 			properties: {
@@ -79,19 +80,30 @@ const TOOL_DEFINITIONS = [
 					description:
 						"'enhanced' for AI-generated panels, 'original' for user notes, 'auto' to pick best available (default: auto)",
 				},
+				path: {
+					type: "string",
+					description:
+						"File path to write the note to as markdown with YAML frontmatter. If omitted, returns content inline.",
+				},
 			},
 			required: ["noteId"],
 		},
 	},
 	{
 		name: "get-transcript",
-		description: "Get the full transcript of a specific Granola meeting by document ID.",
+		description:
+			"Get the full transcript of a specific Granola meeting by document ID. When path is provided, writes to file with YAML frontmatter and returns a short confirmation instead of the full content.",
 		inputSchema: {
 			type: "object" as const,
 			properties: {
 				noteId: {
 					type: "string",
 					description: "The document ID to get transcript for",
+				},
+				path: {
+					type: "string",
+					description:
+						"File path to write the transcript to as markdown with YAML frontmatter. If omitted, returns content inline.",
 				},
 			},
 			required: ["noteId"],
@@ -162,12 +174,14 @@ export async function initServer(server: Server): Promise<void> {
 						const result = await getNote({
 							noteId: input.noteId as string,
 							contentType: input.contentType as "enhanced" | "original" | "auto" | undefined,
+							path: input.path as string | undefined,
 						});
 						return { content: [{ type: "text", text: result }] };
 					}
 					case "get-transcript": {
 						const result = await getTranscriptTool({
 							noteId: input.noteId as string,
+							path: input.path as string | undefined,
 						});
 						return { content: [{ type: "text", text: result }] };
 					}

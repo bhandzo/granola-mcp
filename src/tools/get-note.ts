@@ -1,11 +1,14 @@
 // ABOUTME: get-note tool handler - fetches full content of a Granola note by ID
 // ABOUTME: Supports enhanced (AI panels), original (user notes), or auto content selection
+import { promises as fs } from "node:fs";
+import * as path from "node:path";
 import { convertDocumentToMarkdown, getDocumentBatch, getDocumentPanels, getPanelId } from "../api.js";
 import type { DocumentStructure, PanelsByDocId } from "../types.js";
 
 interface GetNoteInput {
 	noteId: string;
 	contentType?: "enhanced" | "original" | "auto";
+	path?: string;
 }
 
 function resolveEnhancedContent(panels: PanelsByDocId | undefined, documentId: string): string {
@@ -63,6 +66,22 @@ export async function getNote(input: GetNoteInput): Promise<string> {
 
 	const title = doc.title || "Untitled";
 	const date = doc.created_at ? new Date(doc.created_at).toISOString() : new Date().toISOString();
+
+	if (input.path) {
+		const frontmatter = [
+			"---",
+			`title: "${title.replace(/"/g, '\\"')}"`,
+			`date: "${date}"`,
+			`id: "${noteId}"`,
+			"type: note",
+			"---",
+		].join("\n");
+
+		const fileContent = `${frontmatter}\n\n${content}`.trim();
+		await fs.mkdir(path.dirname(input.path), { recursive: true });
+		await fs.writeFile(input.path, fileContent, "utf-8");
+		return `Written to ${input.path}`;
+	}
 
 	return `# ${title}\n\n**Date:** ${date}\n\n${content}`.trim();
 }
