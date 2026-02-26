@@ -72,7 +72,7 @@ export async function getNote(input: GetNoteInput): Promise<string> {
 			"---",
 			`title: "${title.replace(/"/g, '\\"')}"`,
 			`date: "${date}"`,
-			`id: "${noteId}"`,
+			`noteId: "${noteId}"`,
 			"type: note",
 			"---",
 		].join("\n");

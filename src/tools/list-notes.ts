@@ -10,7 +10,7 @@ interface ListNotesInput {
 }
 
 interface NoteListItem {
-	id: string;
+	noteId: string;
 	title: string;
 	date: string;
 }
@@ -53,7 +53,7 @@ export async function listNotes(input: ListNotesInput): Promise<NoteListItem[]> 
 	const docs = await getDocumentsList();
 
 	let filtered = docs.map((doc) => ({
-		id: doc.id,
+		noteId: doc.id,
 		title: doc.title || "Untitled",
 		date: doc.created_at,
 	}));

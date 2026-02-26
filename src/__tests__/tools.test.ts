@@ -15,16 +15,16 @@ afterEach(async () => {
 });
 
 describe("listNotes", () => {
-	it("returns an array with id, title, date fields", async () => {
+	it("returns an array with noteId, title, date fields", async () => {
 		const result = await listNotes({});
 		expect(Array.isArray(result)).toBe(true);
 		expect(result.length).toBeGreaterThan(0);
 
 		const note = result[0];
-		expect(note).toHaveProperty("id");
+		expect(note).toHaveProperty("noteId");
 		expect(note).toHaveProperty("title");
 		expect(note).toHaveProperty("date");
-		expect(typeof note.id).toBe("string");
+		expect(typeof note.noteId).toBe("string");
 		expect(typeof note.title).toBe("string");
 		expect(typeof note.date).toBe("string");
 	});
@@ -71,7 +71,7 @@ describe("listTranscripts", () => {
 		expect(Array.isArray(result)).toBe(true);
 		if (result.length > 0) {
 			const note = result[0];
-			expect(note).toHaveProperty("id");
+			expect(note).toHaveProperty("noteId");
 			expect(note).toHaveProperty("title");
 			expect(note).toHaveProperty("date");
 		}
@@ -83,7 +83,7 @@ describe("getNote", () => {
 		// First get a real note ID
 		const notes = await listNotes({ limit: 1 });
 		expect(notes.length).toBeGreaterThan(0);
-		const noteId = notes[0].id;
+		const noteId = notes[0].noteId;
 
 		const result = await getNote({ noteId });
 		expect(typeof result).toBe("string");
@@ -95,7 +95,7 @@ describe("getNote", () => {
 	it("returns content with contentType 'enhanced' when available", async () => {
 		const notes = await listNotes({ limit: 1 });
 		expect(notes.length).toBeGreaterThan(0);
-		const noteId = notes[0].id;
+		const noteId = notes[0].noteId;
 
 		const result = await getNote({ noteId, contentType: "enhanced" });
 		expect(typeof result).toBe("string");
@@ -110,7 +110,7 @@ describe("getTranscriptTool", () => {
 		// Try to find a note that has a transcript
 		let transcript = "";
 		for (const note of notes) {
-			transcript = await getTranscriptTool({ noteId: note.id });
+			transcript = await getTranscriptTool({ noteId: note.noteId });
 			if (transcript.length > 0 && !transcript.includes("not available")) {
 				break;
 			}
@@ -128,7 +128,7 @@ describe("getNote with path (file output)", () => {
 	it("writes a markdown file with YAML frontmatter when path is provided", async () => {
 		const notes = await listNotes({ limit: 1 });
 		expect(notes.length).toBeGreaterThan(0);
-		const noteId = notes[0].id;
+		const noteId = notes[0].noteId;
 
 		await fs.mkdir(TEST_OUTPUT_DIR, { recursive: true });
 		const filePath = path.join(TEST_OUTPUT_DIR, "test-note.md");
@@ -144,7 +144,7 @@ describe("getNote with path (file output)", () => {
 		expect(content).toMatch(/^---\n/);
 		expect(content).toContain("title:");
 		expect(content).toContain("date:");
-		expect(content).toContain("id:");
+		expect(content).toContain("noteId:");
 		expect(content).toContain("type: note");
 		// Should have closing frontmatter delimiter followed by content
 		expect(content).toMatch(/---\n\n/);
@@ -153,7 +153,7 @@ describe("getNote with path (file output)", () => {
 	it("still returns inline content when no path is provided", async () => {
 		const notes = await listNotes({ limit: 1 });
 		expect(notes.length).toBeGreaterThan(0);
-		const noteId = notes[0].id;
+		const noteId = notes[0].noteId;
 
 		const result = await getNote({ noteId });
 		// Should return full content inline (starts with # heading)
@@ -173,9 +173,9 @@ describe("getTranscriptTool with path (file output)", () => {
 		let result = "";
 		let usedNoteId = "";
 		for (const note of notes) {
-			result = await getTranscriptTool({ noteId: note.id, path: filePath });
+			result = await getTranscriptTool({ noteId: note.noteId, path: filePath });
 			if (result.includes(filePath)) {
-				usedNoteId = note.id;
+				usedNoteId = note.noteId;
 				break;
 			}
 		}
@@ -189,7 +189,7 @@ describe("getTranscriptTool with path (file output)", () => {
 			const content = await fs.readFile(filePath, "utf-8");
 			expect(content).toMatch(/^---\n/);
 			expect(content).toContain("title:");
-			expect(content).toContain("id:");
+			expect(content).toContain("noteId:");
 			expect(content).toContain("type: transcript");
 			expect(content).toMatch(/---\n\n/);
 		}
@@ -201,7 +201,7 @@ describe("getTranscriptTool with path (file output)", () => {
 
 		let transcript = "";
 		for (const note of notes) {
-			transcript = await getTranscriptTool({ noteId: note.id });
+			transcript = await getTranscriptTool({ noteId: note.noteId });
 			if (transcript.length > 0 && !transcript.includes("not available")) {
 				break;
 			}

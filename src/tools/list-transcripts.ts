@@ -10,7 +10,7 @@ interface ListTranscriptsInput {
 }
 
 interface TranscriptListItem {
-	id: string;
+	noteId: string;
 	title: string;
 	date: string;
 }

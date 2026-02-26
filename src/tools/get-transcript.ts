@@ -39,7 +39,7 @@ export async function getTranscriptTool(input: GetTranscriptInput): Promise<stri
 			"---",
 			`title: "${title.replace(/"/g, '\\"')}"`,
 			`date: "${date}"`,
-			`id: "${input.noteId}"`,
+			`noteId: "${input.noteId}"`,
 			"type: transcript",
 			"---",
 		].join("\n");
