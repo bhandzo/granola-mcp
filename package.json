@@ -1,5 +1,5 @@
 {
-  "name": "granola-mcp",
+  "name": "pantry",
   "version": "1.0.0",
   "description": "MCP server for Granola meeting notes and transcripts",
   "type": "module",

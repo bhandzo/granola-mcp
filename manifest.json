@@ -1,6 +1,6 @@
 {
   "manifest_version": "0.3",
-  "name": "granola-mcp",
+  "name": "pantry",
   "display_name": "Granola Meeting Intelligence",
   "version": "1.0.0",
   "description": "Access your Granola meeting notes, transcripts, and analytics directly from Claude",
@@ -11,10 +11,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/bhandzo/granola-mcp"
+    "url": "https://github.com/bhandzo/pantry"
   },
-  "homepage": "https://github.com/bhandzo/granola-mcp",
-  "support": "https://github.com/bhandzo/granola-mcp/issues",
+  "homepage": "https://github.com/bhandzo/pantry",
+  "support": "https://github.com/bhandzo/pantry/issues",
   "server": {
     "type": "node",
     "entry_point": "dist/index.js",

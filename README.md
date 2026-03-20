@@ -1,4 +1,4 @@
-# granola-mcp
+# pantry
 
 MCP server that gives AI assistants access to your [Granola](https://granola.ai) meeting notes and transcripts.
 
@@ -12,8 +12,8 @@ Works with any MCP-compatible client: [Claude Code](https://docs.anthropic.com/e
 ## Setup
 
 ```bash
-git clone https://github.com/bhandzo/granola-mcp.git
-cd granola-mcp
+git clone https://github.com/bhandzo/pantry.git
+cd pantry
 npm install
 npm run build
 ```
@@ -21,7 +21,7 @@ npm run build
 ### Add to Claude Code
 
 ```bash
-claude mcp add granola-mcp node /absolute/path/to/granola-mcp/dist/index.js
+claude mcp add pantry node /absolute/path/to/pantry/dist/index.js
 ```
 
 ### Add to Claude Desktop
@@ -33,7 +33,7 @@ Add to your `claude_desktop_config.json`:
   "mcpServers": {
     "granola": {
       "command": "node",
-      "args": ["/absolute/path/to/granola-mcp/dist/index.js"]
+      "args": ["/absolute/path/to/pantry/dist/index.js"]
     }
   }
 }

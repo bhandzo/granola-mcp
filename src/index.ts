@@ -132,7 +132,7 @@ export function createServer(): Server {
 }
 
 function createServerSync(): Server {
-	const server = new Server({ name: "granola", version: "1.0.0" }, { capabilities: { tools: {} } });
+	const server = new Server({ name: "pantry", version: "1.0.0" }, { capabilities: { tools: {} } });
 	// We'll register handlers lazily in startServer, or eagerly in tests via initServer
 	return server;
 }
